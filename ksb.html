@@ -116,6 +116,20 @@
             background: rgb(0, 0, 0); 
             padding: 0 5px;
         }
+            .glow-animate {
+            color: #fff;
+            text-shadow: 0 0 5px #fff, 0 0 10px rgb(255, 255, 255);
+            animation: flicker 1s infinite alternate;
+        }
+
+        @keyframes flicker {
+        from {
+            text-shadow: 0 0 5px #fff, 0 0 10px rgb(255, 255, 255);
+        }
+        to {
+            text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 40px rgb(255, 255, 255);
+        }
+        }
     </style>
 
 
@@ -123,7 +137,7 @@
 </head>
 <body>
     <div class="window-bar">
-    <div class="window-title">STREAMIFY</div>
+    <div class="window-title"><a href="https://ivan0n.github.io/mymusic/home.html" class="glow-animate" style="color: white; text-decoration: none;">STREAMIFY</a></div>
     <div class="window-controls">
         <button class="minimize">—</button>
         <button class="close">×</button>
