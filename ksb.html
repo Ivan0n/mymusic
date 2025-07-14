@@ -61,46 +61,63 @@
             background-color: black;
             overflow: hidden;
         }
-        .window-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a1a2e;
-    padding: 6px 10px;
-    font-weight: bold;
-    font-size: 14px;
-    color: white;
-    user-select: none;
-    }
+            .window-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1a1a2e;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            user-select: none;
+        }
 
-    .window-title {
-    font-weight: 600;
-    }
+        .window-title {
+             font-weight: 600;
+        }
 
-    .window-controls {
-    display: flex;
-    gap: 8px;
-    }
+        .window-controls {
+            display: flex;
+            gap: 8px;
+        }
 
-    .window-controls button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 0 8px;
-    transition: color 0.2s;
-    }
+        .window-controls button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: color 0.2s;
+        }
 
-    .window-controls button:hover {
-    color: #ff4d4d;
-    }
+        .window-controls button:hover {
+            color: #ff4d4d;
+        }
 
-    .window-controls .minimize:hover {
-    color: #f0c020;
-    }
+        .window-controls .minimize:hover {
+            color: #f0c020;
+        }
+        a[href*="elfsight.com"] {
+            color: transparent !important; /* Прячем старый текст */
+            position: relative !important;
+        }
 
+        a[href*="elfsight.com"]::after {
+            content: "Новый текст"; 
+            color: #000000; 
+            position: absolute;
+            cursor: default;
+            left: 50%;
+            width: 160px;
+            height: 50px;
+            transform: translateX(-50%);
+            background: rgb(0, 0, 0); 
+            padding: 0 5px;
+        }
     </style>
+
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
@@ -112,7 +129,6 @@
         <button class="close">×</button>
     </div>
     </div>
-
 
     <script src="https://static.elfsight.com/platform/platform.js" async></script>
     <div class="elfsight-app-772d3b4c-d00a-4dd1-ab54-e619bd70c722" data-elfsight-app-lazy></div>
