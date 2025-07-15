@@ -53,6 +53,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
     <style>
         body{
             font-family: TikTok Sans;
@@ -62,7 +65,56 @@
             overflow: hidden;
             color: white;
         }
-            .window-bar {
+        
+         #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            user-select: none;
+            }
+
+        .loader-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            }
+
+        .loader-content p {
+            color: white;
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            animation: flicker 1.5s infinite alternate;
+            }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes flicker {
+            from { opacity: 1; }
+            to { opacity: 0.3; }
+        }
+
+        .window-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,11 +123,12 @@
             font-weight: bold;
             font-size: 14px;
             color: white;
-            user-select: none;
+
         }
 
         .window-title {
              font-weight: 600;
+             font-family: Syne;
         }
 
         .window-controls {
@@ -119,7 +172,6 @@
         }
     </style>
     <style>
-
     .card {
       background: #1e1e1e;
       border-radius: 10px;
@@ -208,9 +260,63 @@
         text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 40px rgb(255, 255, 255);
     }
     }
-
   </style>
+<style>
+/* Стили для красивого скроллбара */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #1a1a2e #2d3748;
+}
 
+/* Для Chrome, Safari и новых версий Edge */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(10, 10, 10, 0.5);
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #1a1a2e, #1a1a2e);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #1a1a2e, #1a1a2e);
+    transform: scale(1.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Для Firefox */
+@supports (scrollbar-color: red rgb(255, 255, 255)) {
+    .custom-scrollbar {
+        scrollbar-color: #1a1a2e #000000;
+        scrollbar-width: thin;
+    }
+}
+.window-bar {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #333;
+}
+.window-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
@@ -223,10 +329,19 @@
             <button class="close">×</button>
         </div>
     </div>
+    <div id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p class="glow-animate">Загрузка</p>
+            <p>Streamify загружает ваши песни</p>
+        </div>
+    </div>
 
-
-    <div style="padding-top: 20px; display: flex; flex-direction: column;">
-        <div><h2 style="color: white; font-size: large;">Лучшее:</h2></div>
+    
+    
+    <div style = "padding-top: 20px; display: flex; flex-direction: column; overflow: auto; max-height: 718px;" class = "custom-scrollbar">
+        
+        <div><h2 style="color: white; font-size: large; margin-left: 20px;">Лучшее:</h2></div>
         <div style="display: flex;">
             <div class="card" style="margin-left: 30px;">
                 <div class="cover-container" id="cover-container">
@@ -245,9 +360,37 @@
                 <div class="author">Ivan0n</div>
             </div>
         </div>
-            
-    </div>
+        <div><h2 style="color: white; font-size: large; margin-left: 20px;">Каверы и AI:</h2></div>
+        <div style="display: flex;">
+            <div class="card" style="margin-left: 30px;">
+                <div class="cover-container" id="cover-container">
+                <img id="cover" src="https://github.com/Ivan0n/mymusic/blob/main/aianimation.gif?raw=true" alt="Cover">
+                <a href="https://ivan0n.github.io/mymusic/caveraiplaylist.html"><div class="play-button"></div></a>
+                </div>
+                <div class="title">Люти каверы</div>
+                <div class="author">Ivan0n</div>
+            </div>
+
+        </div>
+        <div style="background-color: #1e1e1e; margin-top: 110px; display: flex; justify-content: start; align-items: start; padding: 0px; flex-direction: column; padding: 0px; padding-left: 10px;">
+            <p style="padding: 0px; margin: 0px; font-size: xx-small; padding-bottom: 5px; margin-top: 0px; padding: 0px;"><b>Build: beta 1.0.2</b></p>
+        </div>
+        
     
+    </div>
+
+<script>
+window.addEventListener("load", function() {
+  const loader = document.getElementById("loader");
+  loader.style.opacity = "0";
+  loader.style.transition = "opacity 0.5s ease";
+  setTimeout(() => {
+    loader.style.display = "none";
+    // Плавно показываем .window-bar
+    document.querySelector(".window-bar").classList.add("visible");
+  }, 500);
+});
+</script>
 
 
 </body>
