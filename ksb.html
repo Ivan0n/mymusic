@@ -2,50 +2,7 @@
 <html lang="ru">
 <head>
     <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
-    <script>
-        let bridge;
-        let isDragging = false;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        window.onload = () => {
-            new QWebChannel(qt.webChannelTransport, function(channel) {
-                bridge = channel.objects.bridge;
-
-                document.querySelector(".close").onclick = () => {
-                    bridge.close_app();
-                };
-
-                document.querySelector(".minimize").onclick = () => {
-                    bridge.minimize_app();
-                };
-
-                const windowBar = document.querySelector(".window-bar");
-
-                windowBar.addEventListener("mousedown", (e) => {
-                    if (e.button !== 0) return;
-
-                    isDragging = true;
-
-                    // Запоминаем смещение курсора относительно окна
-                    offsetX = e.screenX - window.screenX;
-                    offsetY = e.screenY - window.screenY;
-                });
-
-                window.addEventListener("mousemove", (e) => {
-                    if (isDragging) {
-                        const newX = e.screenX - offsetX;
-                        const newY = e.screenY - offsetY;
-                        bridge.move_window(newX, newY);
-                    }
-                });
-
-                window.addEventListener("mouseup", () => {
-                    isDragging = false;
-                });
-            });
-        };
-    </script>
+    <script src="window.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,87 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
-    <style>
-        body{
-            font-family: TikTok Sans;
-            margin: 0px;
-            padding: 0px;
-            background-color: black;
-            overflow: hidden;
-        }
-            .window-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1a1a2e;
-            padding: 6px 10px;
-            font-weight: bold;
-            font-size: 14px;
-            color: white;
-            user-select: none;
-        }
-
-        .window-title {
-             font-weight: 600;
-             font-family: Syne;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .window-controls button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 0 8px;
-            transition: color 0.2s;
-        }
-
-        .window-controls button:hover {
-            color: #ff4d4d;
-        }
-
-        .window-controls .minimize:hover {
-            color: #f0c020;
-        }
-        a[href*="elfsight.com"] {
-            color: transparent !important; /* Прячем старый текст */
-            position: relative !important;
-        }
-
-        a[href*="elfsight.com"]::after {
-            content: "Новый текст"; 
-            color: #000000; 
-            position: absolute;
-            cursor: default;
-            left: 50%;
-            width: 160px;
-            height: 50px;
-            transform: translateX(-50%);
-            background: rgb(0, 0, 0); 
-            padding: 0 5px;
-        }
-            .glow-animate {
-            color: #fff;
-            text-shadow: 0 0 5px #fff, 0 0 10px rgb(255, 255, 255);
-            animation: flicker 1s infinite alternate;
-        }
-
-        @keyframes flicker {
-        from {
-            text-shadow: 0 0 5px #fff, 0 0 10px rgb(255, 255, 255);
-        }
-        to {
-            text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 40px rgb(255, 255, 255);
-        }
-        }
-    </style>
-    
-
+    <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
