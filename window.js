@@ -21,7 +21,6 @@ window.onload = () => {
             if (e.button !== 0) return;
 
             isDragging = true;
-
                     // Запоминаем смещение курсора относительно окна
             offsetX = e.screenX - window.screenX;
             offsetY = e.screenY - window.screenY;
